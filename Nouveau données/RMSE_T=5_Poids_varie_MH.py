@@ -9,13 +9,10 @@ from casadi import *
 from pdfo import *
 import dataframe_image as dfi
 
-
-
 data = ['E-0615.dat','E-0640.dat','E0615.dat','E0640.dat','E1500.dat','E1515.dat','E1540.dat','E4000.dat','E4015.dat','E4040.dat',
         'N-0615.dat','N-0640.dat','N0615.dat','N0640.dat','N1500.dat','N1515.dat','N1540.dat','N4000.dat','N4015.dat','N4040.dat',
         'O-0615.dat','O-0640.dat','O0615.dat','O0640.dat','O1500.dat','O1515.dat','O1540.dat','O4000.dat','O4015.dat','O4040.dat',
         'S-0615.dat','S-0640.dat','S0615.dat','S0640.dat','S1500.dat','S1515.dat','S1540.dat','S4000.dat','S4015.dat','S4040.dat']
-
 
 
 i2 = [1,3,6,7,8,9,11,13,16,18,19,21,23,26,27,28,29,31,33,36,37,38,39]   ##### 23
@@ -23,15 +20,13 @@ i2 = [1,3,6,7,8,9,11,13,16,18,19,21,23,26,27,28,29,31,33,36,37,38,39]   ##### 23
 data2 = []
 
 for i in range(40):
-    if not i in i2 :
+    if i in i2 :
         data2.append(data[i])
 
 
-
 n = 500
-taux = 2.5/n
+taux = 5/n
 T= linspace(0,1,n)
-
 
 
 def tracer_orientation (x,y,theta, r, i):
@@ -42,7 +37,6 @@ def tracer_orientation (x,y,theta, r, i):
     else :
         plt.arrow(x, y, r*cos(theta),r*sin(theta), width = 0.01, color = 'red' )
         plt.arrow(x, y, r*cos(pi/2+theta),r*sin(pi/2+theta), width = 0.01, color = 'yellow' )
-
 
 
 
@@ -114,7 +108,6 @@ def DOC_MH (c1,c2,c3):
     sol = opti.solve()
     
     return sol.value(x), sol.value(y), sol.value(theta)
-
 
 
 
@@ -306,6 +299,7 @@ def MH_KKT (X,Y,Theta,V1,W,V2,U1,U2,U3):
 
 
 
+
 ##################################### BL1
 
 X1=SX.sym('X1',n)
@@ -411,6 +405,7 @@ def MH_BL1 (X,Y,THETA,V1,W,V2,U1,U2,U3):
     sol = opti.solve()
     
     return sol.value(A),sol.value(B),sol.value(C), sol.value(x), sol.value(y), sol.value(theta)
+
 
 
 
@@ -536,7 +531,6 @@ def MH_PDFO (C):
 
 
 
-
 KKT_RMSE_PLAN = np.zeros(23)
 KKT_RMSE_ang_rad = np.zeros(23)
 KKT_RMSE_ang_degree = np.zeros(23)
@@ -583,7 +577,7 @@ for i in range (23):
 
 
 
-df = pd.DataFrame({'Mean_traj (holonomique model Bi-level by PDFO)' : data2, 'RMSE_plan_unity [m]' : KKT_RMSE_PLAN,
+df = pd.DataFrame({'Mean_traj (holonomique model KKT)' : data2, 'RMSE_plan_unity [m]' : KKT_RMSE_PLAN,
                    'RMSE_angular_unity [rad]' : KKT_RMSE_ang_rad, 'RMSE_angular_unity [degree]' : KKT_RMSE_ang_degree})
 
 df
@@ -644,10 +638,11 @@ for i in range (23):
 
 
 
-df = pd.DataFrame({'Mean_traj (holonomique model Bi-level by PDFO)' : data2, 'RMSE_plan_unity [m]' : BL1_RMSE_PLAN,
+df = pd.DataFrame({'Mean_traj (holonomique model Bi-level in one shot)' : data2, 'RMSE_plan_unity [m]' : BL1_RMSE_PLAN,
                    'RMSE_angular_unity [rad]' : BL1_RMSE_ang_rad, 'RMSE_angular_unity [degree]' : BL1_RMSE_ang_degree})
 
 df
+
 
 
 
@@ -703,12 +698,17 @@ for i in range (23):
     PDFO_RMSE_ang_degree[i] = sqrt((np.linalg.norm(Theta_moy-Theta_PDFO)**2 )/n) * (180/pi)
 
 
+
+
 df = pd.DataFrame({'Mean_traj (holonomique model Bi-level by PDFO)' : data2, 'RMSE_plan_unity [m]' : PDFO_RMSE_PLAN,
                    'RMSE_angular_unity [rad]' : PDFO_RMSE_ang_rad, 'RMSE_angular_unity [degree]' : PDFO_RMSE_ang_degree})
 
 df
 
 
+
+
 df.to_csv('RMSE_poids_variable_PDFO_MH_T=5.csv', index = True)
 KKT5 = pd.read_csv('RMSE_poids_variable_PDFO_MH_T=5.csv')
 dfi.export(KKT5, 'RMSE_poids_variable_PDFO_MH_T=5.png')
+
