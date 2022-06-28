@@ -30,7 +30,7 @@ for i in range(40):
 
 n = 500
 taux = 2.5/n
-T= linspace(0,2.5,n)
+T= np.linspace(0,2.5,n)
 
 
 
