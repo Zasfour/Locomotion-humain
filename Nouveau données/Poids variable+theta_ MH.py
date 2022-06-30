@@ -633,3 +633,85 @@ df = pd.DataFrame({'Mean_traj (Bi-level PDFO)' : data, 'RMSE_plan_unity [m]' : P
 df.to_csv('RMSE_poids_variable_Theta_PDFO.csv', index = True)
 
 dfi.export(pd.read_csv('RMSE_poids_variable_Theta_PDFO.csv'), 'PDFO_MH_poids_varie_Theta.png')
+
+BL1_MH_plan = np.zeros(40)
+BL1_MH_ang = np.zeros(40)
+
+for i in range(40):
+    BL1_MH_plan[i] = round(BL1_rmse_plan[i], 7) 
+    BL1_MH_ang[i] = round(BL1_rmse_ang[i], 7) 
+    
+BL1_MH_plan = 10**(7) * BL1_MH_plan
+BL1_MH_ang = 10**(7) * BL1_MH_ang
+
+PDFO_MH_plan = np.zeros(40)
+PDFO_MH_ang = np.zeros(40)
+
+for i in range(40):
+    PDFO_MH_plan[i] = round(PDFO_rmse_plan[i], 7) 
+    PDFO_MH_ang[i] = round(PDFO_rmse_ang[i], 7) 
+    
+PDFO_MH_plan = 10**(7) * PDFO_MH_plan
+PDFO_MH_ang = 10**(7) * PDFO_MH_ang
+
+M01 = int(sum(PDFO_MH_plan))
+M02 = int(sum(PDFO_MH_ang))
+
+M03 = int(sum(BL1_MH_plan))
+M04 = int(sum(BL1_MH_ang))
+
+x1 = np.zeros(M01)
+x2 = np.zeros(M02)
+x3 = np.zeros(M03)
+x4 = np.zeros(M04)
+
+k1 = 0
+k2 = 0
+k3 = 0
+k4 = 0
+
+for i in range (40):
+    m1 = round(BL1_MH_plan[i],0)
+    x1[int(k1):int(m1+k1)] = (i+1)*np.ones(int(m1))
+    k1 = k1 + m1
+    
+    m2 = round(BL1_MH_ang[i],0)
+    x2[int(k2):int(m2+k2)] = (i+1)*np.ones(int(m2))
+    k2 = k2 + m2
+
+    
+    m3 = round(PDFO_MH_plan[i],0)
+    x3[int(k3):int(m3+k3)] = (i+1)*np.ones(int(m3))
+    k3 = k3 + m3
+
+    m4 = int(round(PDFO_MH_ang[i],0))
+    x4[int(k4):int(m4+k4)] = (i+1)*np.ones(int(m4))
+    k4 = k4 + m4
+
+plt.figure(figsize = (25,10))
+
+
+plt.subplot(1,2,1)
+bins = [x + 0.5 for x in range(0, 41)]
+plt.hist([x1, x3], bins = bins, color = ['yellow', 'green'],
+            edgecolor = 'red', hatch = '/', label = ['Non-holonomic model', 'Holonomic model'],
+            histtype = 'bar') # bar est le defaut
+plt.title ('RMSE from plan (x,y) \n Bi-level method')
+plt.ylabel('RMSE_plan [m] (10e-7)')
+plt.xlabel('Mean trajectory')
+plt.xticks(np.arange(1, 41, 1))
+plt.legend()
+
+
+plt.subplot(1,2,2)
+bins = [x + 0.5 for x in range(0, 41)]
+plt.hist([x2, x4], bins = bins, color = ['yellow', 'green'],
+            edgecolor = 'red', hatch = '/', label = ['Non-holonomic model', 'Holonomic model'],
+            histtype = 'bar') # bar est le defaut
+plt.title ('RMSE angular \n Bi-level method')
+plt.ylabel('RMSE_angular [rad] (10e-7)')
+plt.xlabel('Mean trajectory')
+plt.xticks(np.arange(1, 41, 1))
+plt.legend()
+
+plt.savefig("PDFO_contre_BL1.png")

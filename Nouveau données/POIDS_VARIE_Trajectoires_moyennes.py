@@ -144,9 +144,9 @@ def MH_PDFO (C):
         
         m01 += np.sqrt((np.linalg.norm(Xmoy-X1_1)**2 + np.linalg.norm(Ymoy-X2_1)**2 + np.linalg.norm(Theta_moy-X3_1)**2 )/n)
     
-    m02 = 100*abs(np.sum(c1 + c2 + c3 + c4) - n)
+    m02 = 40*abs(np.sum(c1 + c2 + c3 + c4) - n)
 
-    m03 = 100* mk
+    m03 = 40* mk
 
     m1 = m01+m02+m03
         
