@@ -671,20 +671,20 @@ k3 = 0
 k4 = 0
 
 for i in range (40):
-    m1 = round(BL1_MH_plan[i],0)
+    m1 = round(PDFO_MH_plan[i],0)
     x1[int(k1):int(m1+k1)] = (i+1)*np.ones(int(m1))
     k1 = k1 + m1
     
-    m2 = round(BL1_MH_ang[i],0)
+    m2 = round(PDFO_MH_ang[i],0)
     x2[int(k2):int(m2+k2)] = (i+1)*np.ones(int(m2))
     k2 = k2 + m2
 
     
-    m3 = round(PDFO_MH_plan[i],0)
+    m3 = round(BL1_MH_plan[i],0)
     x3[int(k3):int(m3+k3)] = (i+1)*np.ones(int(m3))
     k3 = k3 + m3
 
-    m4 = int(round(PDFO_MH_ang[i],0))
+    m4 = int(round(BL1_MH_ang[i],0))
     x4[int(k4):int(m4+k4)] = (i+1)*np.ones(int(m4))
     k4 = k4 + m4
 
@@ -694,7 +694,7 @@ plt.figure(figsize = (25,10))
 plt.subplot(1,2,1)
 bins = [x + 0.5 for x in range(0, 41)]
 plt.hist([x1, x3], bins = bins, color = ['yellow', 'green'],
-            edgecolor = 'red', hatch = '/', label = ['Non-holonomic model', 'Holonomic model'],
+            edgecolor = 'red', hatch = '/', label = ['PDFO', 'BL1'],
             histtype = 'bar') # bar est le defaut
 plt.title ('RMSE from plan (x,y) \n Bi-level method')
 plt.ylabel('RMSE_plan [m] (10e-7)')
@@ -706,7 +706,7 @@ plt.legend()
 plt.subplot(1,2,2)
 bins = [x + 0.5 for x in range(0, 41)]
 plt.hist([x2, x4], bins = bins, color = ['yellow', 'green'],
-            edgecolor = 'red', hatch = '/', label = ['Non-holonomic model', 'Holonomic model'],
+            edgecolor = 'red', hatch = '/', label = ['PDFO', 'BL1'],
             histtype = 'bar') # bar est le defaut
 plt.title ('RMSE angular \n Bi-level method')
 plt.ylabel('RMSE_angular [rad] (10e-7)')

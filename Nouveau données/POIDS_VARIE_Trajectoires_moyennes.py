@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -9,8 +8,6 @@ import random as random
 from casadi import *
 from pdfo import *
 import dataframe_image as dfi
-
-
 
 data = ['E-0615.dat','E-0640.dat','E0615.dat','E0640.dat','E1500.dat','E1515.dat','E1540.dat','E4000.dat','E4015.dat','E4040.dat',
         'N-0615.dat','N-0640.dat','N0615.dat','N0640.dat','N1500.dat','N1515.dat','N1540.dat','N4000.dat','N4015.dat','N4040.dat',
@@ -22,7 +19,7 @@ taux = 5/n
 T= linspace(0,5,n)
 
 
-options = {'maxfev': 10000 , 'rhobeg' : 0.1 , 'rhoend' : 1e-8}
+options = {'maxfev': 100000 , 'rhobeg' : 0.1 , 'rhoend' : 1e-8}
 
 
 Lin_const = []
