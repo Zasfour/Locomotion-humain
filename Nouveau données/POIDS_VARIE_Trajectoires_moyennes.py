@@ -32,7 +32,7 @@ def d_theta (Theta_moy, Theta_engendre):
     return mn
 
 
-options = {'maxfev': 100000 , 'rhobeg' : 0.01 , 'rhoend' : 1e-6}
+options = {'maxfev': 10000 , 'rhobeg' : 0.1 , 'rhoend' : 1e-8}
 
 
 Lin_const = []
