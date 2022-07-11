@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import random as random
 from pdfo import *
 from casadi import *
+import dataframe_image as dfi
 
 
 
@@ -18,16 +19,24 @@ T = linspace(0,5,n)
 
 
 
-
-def tracer_orientation (x,y,theta, r, i):
+def orientation (x,y,theta, r, i):
+    X00 = [x,x+r*cos(theta)]
+    Y00 = [y,y+r*sin(theta)]
+    
+    
     if i == 1 :
-        plt.arrow(x, y, r*cos(theta),r*sin(theta), width = 0.01, color = 'red' , label = "Axe local suivant x")
-        plt.arrow(x, y, r*cos(pi/2+theta),r*sin(pi/2+theta), width = 0.01, color = 'yellow' , label = "Axe local suivant y")
+        plt.plot(X00,Y00,'r',label='Orientation')
+        plt.arrow(X00[-1],Y00[-1], 0.001*cos(theta),0.001*sin(theta), width = 0.002, color = 'r' )
         plt.legend()
     else :
-        plt.arrow(x, y, r*cos(theta),r*sin(theta), width = 0.01, color = 'red' )
-        plt.arrow(x, y, r*cos(pi/2+theta),r*sin(pi/2+theta), width = 0.01, color = 'yellow' )
- 
+        plt.plot(X00,Y00,'r')
+        plt.arrow(X00[-1],Y00[-1], 0.001*cos(theta),0.001*sin(theta), width = 0.002, color = 'r' )
+        
+
+data = ['E-0615.dat','E-0640.dat','E0615.dat','E0640.dat','E1500.dat','E1515.dat','E1540.dat','E4000.dat','E4015.dat','E4040.dat',
+        'N-0615.dat','N-0640.dat','N0615.dat','N0640.dat','N1500.dat','N1515.dat','N1540.dat','N4000.dat','N4015.dat','N4040.dat',
+        'O-0615.dat','O-0640.dat','O0615.dat','O0640.dat','O1500.dat','O1515.dat','O1540.dat','O4000.dat','O4015.dat','O4040.dat',
+        'S-0615.dat','S-0640.dat','S0615.dat','S0640.dat','S1500.dat','S1515.dat','S1540.dat','S4000.dat','S4015.dat','S4040.dat']
 
 
 
@@ -222,27 +231,54 @@ def MH_PDFO (C):
 
     return m1
 
-T0 = np.loadtxt('S-0615.dat')
-Xmoy = T0[0]
-Ymoy = T0[1]
-Theta_moy = T0[5]
 
-res = pdfo( MH_PDFO, [2/5,0,0,0,0,0,1/5,0,0,0,0,0,1/5,0,0,0,0,0,1/5,0,0,0,0,0], constraints=Lin_const, options=options)
 
-[A0,A1,A2,A3,A4,A5,B0,B1,B2,B3,B4,B5,C0,C1,C2,C3,C4,C5,D0,D1,D2,D3,D4,D5] = res.x
-c1 = A0* (T**0) + A1* (T**1) + A2* (T**2) + A3* (T**3) + A4* (T**4) + A5* (T**5)  
-c2 = B0* (T**0) + B1* (T**1) + B2* (T**2) + B3* (T**3) + B4* (T**4) + B5* (T**5)  
-c3 = C0* (T**0) + C1* (T**1) + C2* (T**2) + C3* (T**3) + C4* (T**4) + C5* (T**5)  
-c4 = D0* (T**0) + D1* (T**1) + D2* (T**2) + D3* (T**3) + D4* (T**4) + D5* (T**5)  
+RMSE_plan = np.zeros(40)
+RMSE_ang = np.zeros(40)
 
-Xi = [Xmoy[0],Ymoy[0],Theta_moy[0]]
-Xf = [Xmoy[-1],Ymoy[-1],Theta_moy[-1]]
+for i in range (40):
 
-x,y,o = MH_DOC(c1,c2,c3,c4,Xi,Xf)
+    T0 = np.loadtxt(data[i])
+    Xmoy = T0[0]
+    Ymoy = T0[1]
+    Theta_moy = T0[5]
 
-plt.figure(figsize=(20,15))
-plt.plot(Xmoy,Ymoy)
-plt.plot(x,y)
-plt.savefig('1.png')
+    res = pdfo( MH_PDFO, [2/5,0,0,0,0,0,1/5,0,0,0,0,0,1/5,0,0,0,0,0,1/5,0,0,0,0,0], constraints=Lin_const, options=options)
 
-sqrt((np.linalg.norm(Xmoy-x)**2 + np.linalg.norm(Ymoy-y)**2 )/n), sqrt((np.linalg.norm(Theta_moy-o)**2 )/n)
+    [A0,A1,A2,A3,A4,A5,B0,B1,B2,B3,B4,B5,C0,C1,C2,C3,C4,C5,D0,D1,D2,D3,D4,D5] = res.x
+    c1 = A0* (T**0) + A1* (T**1) + A2* (T**2) + A3* (T**3) + A4* (T**4) + A5* (T**5)  
+    c2 = B0* (T**0) + B1* (T**1) + B2* (T**2) + B3* (T**3) + B4* (T**4) + B5* (T**5)  
+    c3 = C0* (T**0) + C1* (T**1) + C2* (T**2) + C3* (T**3) + C4* (T**4) + C5* (T**5)  
+    c4 = D0* (T**0) + D1* (T**1) + D2* (T**2) + D3* (T**3) + D4* (T**4) + D5* (T**5)  
+
+    Xi = [Xmoy[0],Ymoy[0],Theta_moy[0]]
+    Xf = [Xmoy[-1],Ymoy[-1],Theta_moy[-1]]
+
+    x,y,o = MH_DOC(c1,c2,c3,c4,Xi,Xf)
+
+    plt.figure(figsize=(20,15))
+    plt.plot(Xmoy,Ymoy,'r',label = 'Traj moyenne {}'.format(data[i]))
+    plt.plot(x,y, label = 'PDFO')
+    plt.plot(x[0],y[0],'o',label = "Point initial")
+    plt.plot(x[-1],y[-1],'o',label = "Point final")
+    orientation (x[0],y[0],o[0],  0.005, 0)
+    orientation (x[100],y[100],o[100],  0.005, 0)
+    orientation (x[200],y[200],o[200],  0.005, 0)
+    orientation (x[300],y[300],o[300],  0.005, 0)
+    orientation (x[400],y[400],o[400], 0.005, 0)
+    orientation (x[-1],y[-1],o[-1],  0.005, 1)
+    plt.legend()
+    plt.xlabel("X[m]")
+    plt.ylabel("Y[m]")
+    plt.grid()
+    plt.savefig('{}_poids_varient.png'.format(data[i]))
+
+    RMSE_plan[i], RMSE_ang[i] = sqrt((np.linalg.norm(Xmoy-x)**2 + np.linalg.norm(Ymoy-y)**2 )/n), sqrt((np.linalg.norm(Theta_moy-o)**2 )/n)
+
+df = pd.DataFrame({'Mean_traj (Bi-level PDFO_poids_varient)' : data, 'RMSE_plan_unity [m]' : RMSE_plan,
+                   'RMSE_angular_unity [rad]' : RMSE_ang, 'RMSE_angular_unity [degree]' : RMSE_ang*(180/np.pi)})
+
+
+df.to_csv('RMSE_poids_varient_4FdC.csv', index = True)
+
+dfi.export(pd.read_csv('RMSE_poids_varient_4FdC.csv'), 'MH_poids_varient_4FdC.png')
