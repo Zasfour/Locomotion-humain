@@ -129,7 +129,7 @@ def MH_DOC(c1,c2,c3,c4,c5,c6,c7,Xi,Xf):
 
 
 
-options = {'maxfev': 10000 , 'rhobeg' : 0.1 , 'rhoend' : 1e-8}
+options = {'maxfev': 1000000 , 'rhobeg' : 0.1 , 'rhoend' : 1e-8}
 
 bounds1 = np.array([[0, 1], [0, 1] , [0, 1], [0, 1], [0, 1] , [0, 1], [0, 1]])
 lin_con1 = LinearConstraint([1, 1, 1, 1, 1, 1 ,1], 1, 1)
