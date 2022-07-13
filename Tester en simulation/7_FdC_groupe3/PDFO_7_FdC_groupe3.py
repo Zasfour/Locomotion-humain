@@ -21,17 +21,16 @@ def corr2(a,b):
     r = (a*b).sum() / np.sqrt((a*a).sum() * (b*b).sum());
     return r
 
+Groupe3 = ['O4000.dat','S4000.dat','E4000.dat','S4015.dat','N4000.dat','O4015.dat','E4015.dat','N4015.dat']
 
-Groupe1 = ['E1500.dat','S1500.dat','O1500.dat','N1500.dat']
 
-
-m01 ,m02 = 62.60648207785031 ,8716.76547379362
-m11 ,m12 = 0.0 ,1154653828.5970802
-m21 ,m22 = 20.543893994759976 ,7861.558309796407
-m31 ,m32 = 488.0082137605221 ,489.1307329027765
-m41 ,m42 = 0.003127686679216384 ,0.15123248841357761
-m51 ,m52 = 41.753853472012764 ,73.75947511558543
-m61 ,m62 = 0.0 ,115465.38285970801
+m01 ,m02 = 199.48711527253298 ,11291.1993561176
+m11 ,m12 = 0.0 ,1014090692.5190746
+m21 ,m22 = 58.187911897949476 ,36298.72854919096
+m31 ,m32 = 485.2884817929601 ,487.5864338674093
+m41 ,m42 = 8.223229991153927e-06 ,0.24546796489495004
+m51 ,m52 = 222.6716365422084 ,468.2557813700287
+m61 ,m62 = 0.0 ,101409.06925190745
 
 
 
@@ -236,9 +235,9 @@ def PDFO (C):
 color = ['orangered', 'olive']
 
 
-for j in range (len(Groupe1)):
+for j in range (len(Groupe3)):
 
-    T0 = np.loadtxt(Groupe1[j])
+    T0 = np.loadtxt(Groupe3[j])
     Xmoy = T0[0]
     Ymoy = T0[1]
     Theta_moy = T0[5]
@@ -275,7 +274,7 @@ for j in range (len(Groupe1)):
 
 
     plt.plot(x,y,'orange', label = 'Bi-level by (PDFO)')
-    plt.plot(Xmoy,Ymoy,'greenyellow', label = 'mean trajectory by {}'.format(Groupe1[j]))
+    plt.plot(Xmoy,Ymoy,'greenyellow', label = 'mean trajectory by {}'.format(Groupe3[j]))
 
     plt.plot(x[0],y[0],'o', color = 'tab:green', label = 'initial position')
     plt.plot(x[-1],y[-1],'o', color = 'darkorange', label = 'goal position')
@@ -286,4 +285,4 @@ for j in range (len(Groupe1)):
     ax.set_aspect("equal")
     plt.xlabel ("X [m]")
     plt.ylabel ("Y [m]")
-    plt.savefig("PDFO_{}.png".format(Groupe1[i]))
+    plt.savefig("PDFO_{}.png".format(Groupe3[i]))

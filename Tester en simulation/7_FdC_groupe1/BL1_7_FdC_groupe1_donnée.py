@@ -40,7 +40,7 @@ def corr2(a,b):
 
 
 
-Groupe1 = ['S1500.dat','E1500.dat','O1500.dat','N1500.dat']
+Groupe1 = ['E1500.dat','S1500.dat','O1500.dat','N1500.dat']
 
 
 
@@ -284,7 +284,7 @@ def MH_BL1 (U1,U2,U3 ,V1,V2,W,X,Y,THETA,Xi,Xf) :
 
 
 
-    opti.minimize(  R(u1,u2,u3,v1,w,v2,x,y,theta, Lambda, alpha1, alpha2, alpha3, alpha4, alpha5, alpha6, alpha7 , X[0],Y[0] ,THETA[0] , X[-1] ,Y[-1],THETA[-1] ) + M (x,y,theta, X,Y,THETA) )
+    opti.minimize(  0.1*R(u1,u2,u3,v1,w,v2,x,y,theta, Lambda, alpha1, alpha2, alpha3, alpha4, alpha5, alpha6, alpha7 , X[0],Y[0] ,THETA[0] , X[-1] ,Y[-1],THETA[-1] ) + M (x,y,theta, X,Y,THETA) )
     #opti.minimize( M (x,y,theta, X,Y,THETA) ) 
     
     #opti.subject_to( R(u1,u2,u3,v1,w,v2,x,y,theta, Lambda, alpha1, alpha2, alpha3, alpha4, alpha5, alpha6, alpha7 , X[0],Y[0] ,THETA[0] , X[-1] ,Y[-1],THETA[-1] ) < 10**(-3))
