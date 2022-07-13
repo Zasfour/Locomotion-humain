@@ -198,7 +198,7 @@ u3_prime[0] = 0
 u3_prime[n] = 0
 u3_prime[1:n] = u3[0:n-1]
 
-Lambda = SX.sym('Lambda',n+3, 6)
+Lambda = SX.sym('Lambda',n+2, 6)
 
 
 
@@ -219,18 +219,13 @@ K = Function('K', [v1], [p2])
 p =vertcat(v1[1:],0)
 g = Function ('g',[v1],[p])
 
-
 Y1_K = (x_prime+taux*(v1_prime*cos(theta_prime) - v2_prime*sin(theta_prime)) - h(x, xi,xf))
 Y2_K = (y_prime+taux*(v1_prime*sin(theta_prime) + v2_prime*cos(theta_prime)) - h(y, yi,yf)) 
 Y3_K = (theta_prime+taux*w_prime - h(theta, thetai,thetaf))
 
-U1 = (g(v1) + 10**(-4) -v1)/taux - u1
-U2 = (g(w) + 10**(-4) -w)/taux  - u2
-U3 = (g(v2) + 10**(-4) -v2)/taux  - u3 
-
-Y4_K = K(U1) 
-Y5_K = K(U2)
-Y6_K = K(U3)
+Y4_K = (vertcat(0,v1[1:],v1[-1]) - vertcat(-v1[0],v1[:-1],0))/taux - vertcat(0,u1[:-1],0) 
+Y5_K = (vertcat(0,w[1:],w[-1]) - vertcat(-w[0],w[:-1],0))/taux - vertcat(0,u2[:-1],0)
+Y6_K = (vertcat(0,v2[1:],v2[-1]) - vertcat(-v2[0],v2[:-1],0))/taux - vertcat(0,u3[:-1],0)
 
 
 
@@ -250,11 +245,8 @@ G_lambda = 0
 for i in range (n+1):
     G_lambda += dot(Y_K[i,:], Lambda[i,:])
     
-G_lambda += (v1[0]-0.0001)*Lambda[n+1,0] + (w[0]-0.0001)*Lambda[n+1,1] + (v2[0]-0.0001)*Lambda[n+1,2] 
-G_lambda += (v1[-1]-0.0001)*Lambda[n+1,3] + (w[-1]-0.0001)*Lambda[n+1,4] + (v2[-1]-0.0001)*Lambda[n+1,5] 
-
-G_lambda += (u1[0]-0.0001)*Lambda[n+2,0] + (u2[0]-0.0001)*Lambda[n+2,1] + (u3[0]-0.0001)*Lambda[n+2,2] 
-G_lambda += (u1[-1]-0.0001)*Lambda[n+2,3] + (u2[-1]-0.0001)*Lambda[n+2,4] + (u3[-1]-0.0001)*Lambda[n+2,5] 
+G_lambda += (u1[0])*Lambda[n+1,0] + (u2[0])*Lambda[n+1,1] + (u3[0])*Lambda[n+1,2] 
+G_lambda += (u1[-1])*Lambda[n+1,3] + (u2[-1])*Lambda[n+1,4] + (u3[-1])*Lambda[n+1,5] 
 
 
 F_val_K =  taux*(  dot(c1 *u1,u1) +  dot(c2 *u2,u2) +  dot(c3*u3,u3) +  dot(c4*(theta-thetaf),(theta-thetaf)))
