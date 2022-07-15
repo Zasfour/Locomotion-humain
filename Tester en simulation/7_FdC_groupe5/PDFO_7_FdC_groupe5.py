@@ -251,9 +251,15 @@ for j in range (len(Groupe5)):
 
     x,y,o,v01,w0,v02,u01,u02,u03 = MH_DOC(c1,c2,c3,c4,c5,c6,c7,Xi,Xf)
 
-    plt.figure(figsize=(25,25))
-    m = (((x[0]-x[-1])**2 + (y[0]-y[-1])**2 )/n)*15
-    m1 = (((Xmoy[0]-Xmoy[-1])**2 + (Ymoy[0]-Ymoy[-1])**2 )/n)*15
+
+    plt.figure(figsize=(15,15))
+
+    m = (((x[0]-x[-1])**2 + (y[0]-y[-1])**2 )/n)
+    m1 = (((Xmoy[0]-Xmoy[-1])**2 + (Ymoy[0]-Ymoy[-1])**2 )/n)
+
+    if m1 < 1 :
+        m = m*15
+        m1 = m1*15
 
     Orientation_ (x[0],y[0],o[0] ,m, color[0])
     Orientation_  (x[100],y[100],o[100] ,m,color[0])
@@ -284,4 +290,4 @@ for j in range (len(Groupe5)):
     ax.set_aspect("equal")
     plt.xlabel ("X [m]")
     plt.ylabel ("Y [m]")
-    plt.savefig("PDFO_{}.png".format(Groupe5[i]))
+    plt.savefig("PDFO_{}.png".format(Groupe5[j]))
