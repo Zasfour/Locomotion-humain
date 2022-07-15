@@ -65,10 +65,6 @@ for i in range (M.shape[0]):
 Max = Function ('Max',[x,y,xf,yf],[N0])
 
 
-Groupe1 = ['S1500.dat','E1500.dat','O1500.dat','N1500.dat']
-
-
-
 def MH_DOC(c1,c2,c3,c4,c5,c6,c7,Xi,Xf):
     
     opti = casadi.Opti()   
@@ -131,7 +127,7 @@ def MH_DOC(c1,c2,c3,c4,c5,c6,c7,Xi,Xf):
 
 
 
-options = {'maxfev': 1000000 , 'rhobeg' : 0.1 , 'rhoend' : 1e-8}
+options = {'maxfev': 100000 , 'rhobeg' : 0.1 , 'rhoend' : 1e-8}
 
 bounds1 = np.array([[0, 1], [0, 1] , [0, 1], [0, 1], [0, 1] , [0, 1], [0, 1]])
 lin_con1 = LinearConstraint([1, 1, 1, 1, 1, 1 ,1], 1, 1)
@@ -229,9 +225,9 @@ def PDFO (C):
     m002 = 10* np.abs (c1 + c2 + c3 + c4 + c5 + c6 + c7 -1)
     m003 = 10* mk
     
-    m1 = float(m001+m002+m003)
+    m100 = float(m001+m002+m003)
 
-    return m1
+    return m100
 
 color = ['orangered', 'olive']
 
@@ -293,4 +289,4 @@ for j in range (len(Groupe1)):
     ax.set_aspect("equal")
     plt.xlabel ("X [m]")
     plt.ylabel ("Y [m]")
-    plt.savefig("PDFO_{}.png".format(Groupe1[j]))
+    plt.savefig("PDFO_0{}.png".format(Groupe1[j]))

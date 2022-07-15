@@ -64,9 +64,6 @@ for i in range (M.shape[0]):
 Max = Function ('Max',[x,y,xf,yf],[N0])
 
 
-Groupe1 = ['S1500.dat','E1500.dat','O1500.dat','N1500.dat']
-
-
 
 def MH_DOC(c1,c2,c3,c4,c5,c6,c7,Xi,Xf):
     
