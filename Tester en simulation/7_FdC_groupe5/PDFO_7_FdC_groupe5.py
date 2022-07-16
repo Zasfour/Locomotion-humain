@@ -251,12 +251,9 @@ for j in range (len(Groupe5)):
 
     plt.figure(figsize=(15,15))
 
-    m = (((x[0]-x[-1])**2 + (y[0]-y[-1])**2 )/n)
-    m1 = (((Xmoy[0]-Xmoy[-1])**2 + (Ymoy[0]-Ymoy[-1])**2 )/n)
+    m = (((x[0]-x[-1])**2 + (y[0]-y[-1])**2 )/n)*2
+    m1 = (((Xmoy[0]-Xmoy[-1])**2 + (Ymoy[0]-Ymoy[-1])**2 )/n)*2
 
-    if m1 < 1 :
-        m = m*15
-        m1 = m1*15
 
     Orientation_ (x[0],y[0],o[0] ,m, color[0])
     Orientation_  (x[100],y[100],o[100] ,m,color[0])

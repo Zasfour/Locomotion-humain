@@ -24,6 +24,7 @@ def corr2(a,b):
 Groupe3 = ['O4000.dat','S4000.dat','E4000.dat','S4015.dat','N4000.dat','O4015.dat','E4015.dat','N4015.dat']
 
 
+
 m01 ,m02 = 199.48711527253298 ,11291.1993561176
 m11 ,m12 = 0.0 ,1014090692.5190746
 m21 ,m22 = 58.187911897949476 ,36298.72854919096
@@ -254,11 +255,8 @@ for j in range (len(Groupe3)):
     plt.figure(figsize=(15,15))
     
     m = (((x[0]-x[-1])**2 + (y[0]-y[-1])**2 )/n)
-    m1 = (((Xmoy[0]-Xmoy[-1])**2 + (Ymoy[0]-Ymoy[-1])**2 )/n)
+    m1 = (((Xmoy[0]-Xmoy[-1])**2 + (Ymoy[0]-Ymoy[-1])**2 )/n)*2
 
-    if m1 < 1 :
-        m = m*15
-        m1 = m1*15
 
     Orientation_ (x[0],y[0],o[0] ,m, color[0])
     Orientation_  (x[100],y[100],o[100] ,m,color[0])
