@@ -57,7 +57,7 @@ M = []
 for i in range (1):
     M = vertcat(M,fmax(0,(x[i+1]-xf)**2 + (y[i+1]-yf)**2 - ((x[i]-xf)**2 + (y[i]-yf)**2)))
 
-N0 = SX.zeros(1)
+N0 = SX.zeros(n-1)
 for i in range (M.shape[0]):
     N0 += M[i]
     
