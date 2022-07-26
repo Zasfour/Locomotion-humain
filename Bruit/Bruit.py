@@ -467,9 +467,6 @@ for i in range (6*(n+2)+1):
     cu.append(0)
 
 
-# In[ ]:
-
-
 sigma = [10**(-5),5*10**(-5),10**(-4),5*10**(-4),10**(-3),5*10**(-3),10**(-2),5*10**(-2),10**(-1),5*10**(-1),10**(-0)]
 
 
@@ -536,6 +533,8 @@ for mm in range (len(sigma)):
     plt.plot(X_bl,Y_bl,label = 'DOC (BL)')
     plt.xlabel('X [m]')
     plt.ylabel('Y [m]')
+    plt.legend()
+
     
     
     
@@ -547,6 +546,8 @@ for mm in range (len(sigma)):
     plt.plot(T,X_bl,label = 'DOC (BL)')
     plt.xlabel('Time [s]')
     plt.ylabel('X [m]')
+    plt.legend()
+
     
     
     plt.subplot(2,2,3)
@@ -557,6 +558,8 @@ for mm in range (len(sigma)):
     plt.plot(T,Y_bl,label = 'DOC (BL)')
     plt.xlabel('Time [s]')
     plt.ylabel('Y [m]')  
+    plt.legend()
+
     
     
     plt.subplot(2,2,4)
@@ -566,7 +569,8 @@ for mm in range (len(sigma)):
     plt.plot(T,Theta_kkt,label = 'DOC (IKKT)')
     plt.plot(T,Theta_bl,label = 'DOC (BL)')
     plt.xlabel('Time [s]')
-    plt.ylabel('Theta [m]')
+    plt.ylabel('Theta [rad]')
+    plt.legend()
                 
     plt.savefig('bruit_sigma={}.png'.format(sigma[mm]))
             
