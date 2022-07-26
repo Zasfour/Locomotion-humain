@@ -342,6 +342,7 @@ class BL1(object):
 
 
 
+
 color = ['orangered', 'olive']
 
 for j in range (len(Groupe1)):
@@ -426,18 +427,18 @@ for j in range (len(Groupe1)):
 
 
     Orientation_ (x[0],y[0],o[0] ,m, color[0])
-    Orientation_  (x[100],y[100],o[100] ,m,color[0])
-    Orientation_ (x[200],y[200],o[200] ,m, color[0])
-    Orientation_ (x[300],y[300],o[300] ,m, color[0])
-    Orientation_ (x[400],y[400],o[400] ,m, color[0])
+    Orientation_  (x[10],y[10],o[10] ,m,color[0])
+    Orientation_ (x[20],y[20],o[20] ,m, color[0])
+    Orientation_ (x[30],y[30],o[30] ,m, color[0])
+    Orientation_ (x[40],y[40],o[40] ,m, color[0])
 
     Orientation_ (x[-1],y[-1],o[-1], m, color[0])
 
     Orientation_ (X0[0],Y0[0],Theta[0] ,m1, color[1])
-    Orientation_ (X0[100],Y0[100],Theta[100] ,m1, color[1])
-    Orientation_ (X0[200],Y0[200],Theta[200] ,m1, color[1])
-    Orientation_ (X0[300],Y0[300],Theta[300] ,m1, color[1])
-    Orientation_ (X0[400],Y0[400],Theta[400] ,m1, color[1])
+    Orientation_ (X0[10],Y0[10],Theta[10] ,m1, color[1])
+    Orientation_ (X0[20],Y0[20],Theta[20] ,m1, color[1])
+    Orientation_ (X0[30],Y0[30],Theta[30] ,m1, color[1])
+    Orientation_ (X0[40],Y0[40],Theta[40] ,m1, color[1])
     Orientation_ (X0[-1],Y0[-1],Theta[-1] ,m1, color[1])
 
 
@@ -455,4 +456,3 @@ for j in range (len(Groupe1)):
     plt.xlabel ("X [m]")
     plt.ylabel ("Y [m]")
     plt.savefig("BL1D+IKKT_{}.png".format(Groupe1[j]))
-
